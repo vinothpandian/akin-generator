@@ -12,7 +12,7 @@
     <img alt="Python: 3.8" src="https://img.shields.io/badge/Python-3.8-important" />
   </a>
   <a href="#" target="_blank">
-    <img alt="Dependency: Tensorflow 2.3" src="https://img.shields.io/badge/Tensorflow-2.3-important" />
+    <img alt="Dependency: Tensorflow 2.1" src="https://img.shields.io/badge/Tensorflow-2.1-important" />
   </a>
   <br/>
   <br/>
@@ -33,7 +33,7 @@ Akin uses a manually annotated subset of RICO dataset
 
 ## Setup and usage
 
-Akin uses Python 3.8 and Tensorflow 2.3.
+Akin uses Python 3.8 and Tensorflow 2.1.
 
 To install and retrain Akin, follow the steps below
 
