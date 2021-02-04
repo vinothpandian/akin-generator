@@ -6,9 +6,19 @@ Tensorflow-2.0 implementation of ["Self-Attention Generative Adversarial Network
 
         python main.py --train
 
-* generate
+* generate semantic images
     
         python main.py
+        
+* generate json annotation file from semantic images
+    
+        python postProcessing.py
+        
+* generate wireframe images from json
+    
+        python prototypeGenerator.py --font_path complete_path_to_font_ttf_file
+        
+
 
 the results will show in `./results`.
 

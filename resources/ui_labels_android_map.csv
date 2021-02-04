@@ -1,0 +1,29 @@
+text;text;/\/\/\/\/\/\/\/\/\/\/;1
+image;image;;1
+log_in;button;Log in;1
+sign_up;button;Sign up;1
+username;text;Username,Email, ID;1
+password;password;Password,Re-enter password, PIN;4
+icon;image;;1
+forgot;text;Forgot password?,Forgot ID?;1
+sm_button;button;Social media sign up;1
+button;button;button;1
+box;;;0
+privacy;text;T and C;1
+check;checkbox;Check box;3
+name;text;Name,Last name;1
+navigation_dots;navigation;;2
+number;text;$ 999;1
+selector;selection;Selector;1
+search;search_icon;Search;3
+edit_number;text;Enter number;1
+edit_string;text;Enter text;1
+filter;filter;;2
+top_bar;tab_bar;Tab bar;5
+heart_icon;heart_icon;;2
+sort;sort;;2
+rating;rating;;2
+bottom_bar;botton_bar;;1
+cart_add;button;Add to cart;1
+other;;;0
+buy;button;Buy;1

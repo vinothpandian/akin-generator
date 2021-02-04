@@ -47,7 +47,7 @@ def parse_args():
     parser.add_argument('--sample_dir', type=str, default='samples',
                         help='Directory name to save the samples on training')
 
-    parser.add_argument("--category_file", type=str, default='../../data/category.csv')
+    parser.add_argument("--category_file", type=str, default='../resources/category.csv')
 
     return parser.parse_args()
 
