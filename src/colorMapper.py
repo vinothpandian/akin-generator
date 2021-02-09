@@ -1,19 +1,19 @@
 from __future__ import division
 
-import os, sys
+import os
+import sys
 
-from src.uiLabelFileManager import UILabelFileManager
+from .uiLabelFileManager import UILabelFileManager
 
 foo_dir = os.path.dirname(os.path.join(os.getcwd(), __file__))
-sys.path.append(os.path.normpath(os.path.join(foo_dir, '..', '..')))
+sys.path.append(os.path.normpath(os.path.join(foo_dir, "..", "..")))
 
-import numpy as np
 import cv2
+import numpy as np
 from scipy.spatial.distance import cdist
 
 
 class ColorMapper:
-
     @staticmethod
     def map_color_and_save(color_string, sorted_labels, hierarchy_file, level, save_csv_file, save_image_file):
         s = color_string.split(",")
@@ -53,10 +53,9 @@ class ColorMapper:
         lineType = 1
         i = 0
         for k, v in label_color_map.items():
-            img[(i * side):(i * side) + side, 0:side, :] = [v[0], v[1], v[2]]
+            img[(i * side) : (i * side) + side, 0:side, :] = [v[0], v[1], v[2]]
             bottomLeftCornerOfText = (int(side * 1.5), (i * side) + int(side / 2))
-            img = cv2.putText(img, str(k), bottomLeftCornerOfText,
-                              font, fontScale, fontColor, lineType)
+            img = cv2.putText(img, str(k), bottomLeftCornerOfText, font, fontScale, fontColor, lineType)
             i += 1
         cv2.imwrite(save_image_file, img)
 
@@ -113,7 +112,7 @@ class ColorMapper:
     def read_label_color_map_string(file):
         label_color_map = ColorMapper.read_label_color_map(file)
         for k, v in label_color_map.items():
-            print("elif \"" + str(k) + "\" == label:\n\treturn (" + str(v[0]) + "," + str(v[1]) + "," + str(v[2]) + ")")
+            print('elif "' + str(k) + '" == label:\n\treturn (' + str(v[0]) + "," + str(v[1]) + "," + str(v[2]) + ")")
 
     @staticmethod
     def create_color_pallate(file, image_file):
@@ -124,12 +123,12 @@ class ColorMapper:
     def print_color_map_as_hex(file):
         label_color_map = ColorMapper.read_label_color_map(file, bgr=True)
         for key, v in label_color_map.items():
-            color = '%02x%02x%02x' % (v[0], v[1], v[2])
+            color = "%02x%02x%02x" % (v[0], v[1], v[2])
             k = key.replace("_", " ")
             print(k + " & $\\#\\mathrm{" + color + "}$ \\\\")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     color_8 = "black,#000000,red,#ff0000,gold,#ffd700,mediumvioletred,#c71585,lime,#00ff00,blue,#0000ff,dodgerblue,#1e90ff,aquamarine,#7fffd4"
     color_29 = "black,#000000,dimgray,#696969,lightgray,#d3d3d3,darkolivegreen,#556b2f,saddlebrown,#8b4513,forestgreen,#228b22,darkslateblue,#483d8b,darkgoldenrod,#b8860b,darkcyan,#008b8b,navy,#000080,darkseagreen,#8fbc8f,darkmagenta,#8b008b,maroon3,#b03060,red,#ff0000,gold,#ffd700,lime,#00ff00,mediumspringgreen,#00fa9a,blueviolet,#8a2be2,crimson,#dc143c,aqua,#00ffff,deepskyblue,#00bfff,blue,#0000ff,greenyellow,#adff2f,fuchsia,#ff00ff,dodgerblue,#1e90ff,khaki,#f0e68c,salmon,#fa8072,plum,#dda0dd,deeppink,#ff1493"
     sorted_label_file = "../../../data/ui_labels_sorted.csv"
@@ -137,9 +136,36 @@ if __name__ == '__main__':
     level = 1
     save_csv_file = "../../../data/ui_labels_color_map.csv"
     save_image_file = "../../../data/ui_labels_color.jpg"
-    sorted_labels = ['text', 'image', 'log_in', 'sign_up', 'username', 'password', 'icon', 'forgot', 'sm_button',
-                     'button', 'box', 'privacy', 'check', 'name', 'navigation_dots', 'number', 'selector', 'search',
-                     'edit_number', 'edit_string', 'filter', 'top_bar', 'heart_icon', 'sort', 'rating', 'bottom_bar',
-                     'card_add', 'other', 'buy']
+    sorted_labels = [
+        "text",
+        "image",
+        "log_in",
+        "sign_up",
+        "username",
+        "password",
+        "icon",
+        "forgot",
+        "sm_button",
+        "button",
+        "box",
+        "privacy",
+        "check",
+        "name",
+        "navigation_dots",
+        "number",
+        "selector",
+        "search",
+        "edit_number",
+        "edit_string",
+        "filter",
+        "top_bar",
+        "heart_icon",
+        "sort",
+        "rating",
+        "bottom_bar",
+        "card_add",
+        "other",
+        "buy",
+    ]
 
     ColorMapper.map_color_and_save(color_29, sorted_labels, hierarchy_file, level, save_csv_file, save_image_file)

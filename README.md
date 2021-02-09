@@ -37,6 +37,10 @@ Akin uses Python 3.8 and Tensorflow 2.1.
 
 To install and retrain Akin, follow the steps below
 
+- Download and extract the dataset to the `data/train` directory
+
+  - [Dataset with annotations and semantic images](https://blackbox-toolkit.com/datasets/Akin_SAGAN_500.tar.gz)
+
 - Download the following files to the `models/` directory
 
   - [Akin trained checkpoint](https://blackbox-toolkit.com/models/akin_checkpoints.tar.gz)
@@ -47,9 +51,9 @@ To install and retrain Akin, follow the steps below
   pip install -r requirements.txt
   ```
 
-- To train
+- To train run
   ```sh
-  python main.py
+  python main.py --train
   ```
 
 ---
