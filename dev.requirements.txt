@@ -1,0 +1,6 @@
+ipywidgets==7.6.3
+jupyterlab==3.0.9
+matplotlib==3.3.4
+plotly==4.14.3
+pydot==1.4.2
+black==20.8b1

@@ -130,3 +130,7 @@ dmypy.json
 
 data/
 .vscode/
+
+models/
+results/
+checkpoints/
