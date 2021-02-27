@@ -62,8 +62,6 @@ async def generate_wireframes(
     ),
 ):
 
-    response = generate_annotations(ui_design_pattern_type)
-
-    print(response)
+    response = generate_annotations(ui_design_pattern_type, sample_num=8)
 
     return response

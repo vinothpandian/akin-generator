@@ -1,4 +1,4 @@
-from enum import Enum, IntEnum
+from enum import Enum
 
 from pydantic import BaseModel
 
@@ -19,9 +19,9 @@ class PredictionResponse(BaseModel):
     dimension: DimensionSchema
 
 
-class UIDesignPattern(IntEnum, Enum):
-    login = 1
-    account_creation = 2
-    product_listing = 3
-    product_description = 4
-    splash = 5
+class UIDesignPattern(Enum):
+    login = "login"
+    account_creation = "account_creation"
+    product_listing = "product_listing"
+    product_description = "product_description"
+    splash = "splash"

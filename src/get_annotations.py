@@ -111,11 +111,24 @@ def get_annotations(image, category):
     return elements
 
 
+def get_category_value(category: UIDesignPattern):
+    if category == UIDesignPattern.login:
+        return 1
+    elif category == UIDesignPattern.account_creation:
+        return 2
+    elif category == UIDesignPattern.product_listing:
+        return 3
+    elif category == UIDesignPattern.product_description:
+        return 4
+    else:
+        return 5
+
+
 def generate_annotations(category: UIDesignPattern, sample_num=16, z_dim=128):
     global GEN
 
     z = tf.random.truncated_normal(shape=(sample_num, z_dim), dtype=tf.float32)
-    c = tf.ones(sample_num, dtype=tf.int32) * category.value
+    c = tf.ones(sample_num, dtype=tf.int32) * get_category_value(category)
     c = tf.reshape(c, [sample_num, 1])
     samples = GEN([z, c])[0].numpy()
     images = np.array([resize_screen(x, cv2.INTER_NEAREST) for x in samples])
