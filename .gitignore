@@ -135,3 +135,5 @@ models/
 results/
 checkpoints/
 notebook/
+docker-compose.yml
+

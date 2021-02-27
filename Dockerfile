@@ -23,10 +23,6 @@ RUN python -m pip install -r requirements.txt
 
 WORKDIR /app
 
-RUN curl https://blackbox-toolkit.com/models/akin_checkpoints.tar.gz -o checkpoints.tar.gz
-RUN tar xfz checkpoints.tar.gz
-RUN rm -rf checkpoints.tar.gz
-
 COPY . /app
 
 

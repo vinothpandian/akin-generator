@@ -16,8 +16,7 @@ from src.sagan_models import create_generator
 
 GEN = create_generator(image_size=128, z_dim=128, filters=16, kernel_size=4)
 
-g_latest = tf.train.latest_checkpoint("./checkpoints/g/")
-GEN.load_weights(g_latest)
+GEN.load_weights("./checkpoints/g/cp-007000.ckpt")
 
 color_map_file = Path("./resources/ui_labels_color_map.csv")
 color_map = pd.read_csv(color_map_file, index_col=0, header=None)
