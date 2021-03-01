@@ -113,15 +113,15 @@ def get_annotations(image, category):
 
 def get_category_value(category: UIDesignPattern):
     if category == UIDesignPattern.login:
-        return 1
+        return 0
     elif category == UIDesignPattern.account_creation:
-        return 2
+        return 1
     elif category == UIDesignPattern.product_listing:
-        return 3
+        return 2
     elif category == UIDesignPattern.product_description:
-        return 4
+        return 3
     else:
-        return 5
+        return 4
 
 
 def generate_annotations(category: UIDesignPattern, sample_num=16, z_dim=128):

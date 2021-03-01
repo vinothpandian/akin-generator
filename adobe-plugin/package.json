@@ -1,0 +1,36 @@
+{
+  "name": "akin-ui-wireframe-generator",
+  "version": "1.0.0",
+  "main": "main.js",
+  "type": "module",
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "scripts": {
+    "watch": "nodemon -w src -e js -w rollup.config.js -x yarn build",
+    "build": "rollup --config"
+  },
+  "license": "none",
+  "private": true,
+  "devDependencies": {
+    "@rollup/plugin-eslint": "^8.0.1",
+    "@rollup/plugin-json": "^4.1.0",
+    "eslint": "^7.21.0",
+    "eslint-config-airbnb": "18.2.1",
+    "eslint-config-node": "^4.1.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-import": "2.22.1",
+    "eslint-plugin-jsx-a11y": "6.4.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react": "7.21.5",
+    "eslint-plugin-react-hooks": "1.7.0",
+    "nodemon": "^1.18.7",
+    "prettier": "^2.2.1",
+    "rollup": "^2.40.0"
+  },
+  "dependencies": {
+    "@rollup/plugin-image": "^2.0.6",
+    "yarn": "^1.12.3"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "name" : "Akin UI wireframe generator",
+  "description": "Akin is a UI wireframe generator that allows designers to chose a UI design pattern and provides them with multiple UI wireframes for a given UI design pattern",
+  "languages": ["en"],
+  "author": "Vinoth Pandian",
+  "host" : {
+    "app" : "XD",
+    "minVersion" : "21.0"
+  },
+  "id" : "fde42ad8",
+  "icons" : [ {
+    "path" : "images/icon@1x.png",
+    "width" : 24,
+    "height" : 24
+  }, {
+    "path" : "images/icon@2x.png",
+    "width" : 48,
+    "height" : 48
+  } ],
+  "uiEntryPoints" : [ {
+    "type" : "menu",
+    "label": "Generate login screen",
+    "commandId" : "generateLoginScreen"
+  },{
+    "type" : "menu",
+    "label": "Generate account creation screen",
+    "commandId" : "generateAccountCreationScreen"
+  },{
+    "type" : "menu",
+    "label": "Generate product listing screen",
+    "commandId" : "generateProductListing"
+  },{
+    "type" : "menu",
+    "label": "Generate product description screen",
+    "commandId" : "generateProductDescription"
+  },{
+    "type" : "menu",
+    "label": "Generate splash screen",
+    "commandId" : "generateSplashScreen"
+  }],
+  "version" : "0.0.1"
+}
