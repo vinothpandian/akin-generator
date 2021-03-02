@@ -47,16 +47,16 @@ export function generateArtboard(uiPatternName, uiScreen, i) {
   const [x, y] = getArtboardLocation(i);
 
   const artboard = new Artboard();
-  artboard.name = `${uiPatternName}_wireframe_${i}`;
-  artboard.width = ARTBOARD_WIDTH;
-  artboard.height = ARTBOARD_HEIGHT;
+  artboard.name = `${uiPatternName}_wireframe_${uiScreen.id}`;
+  artboard.width = uiScreen.width;
+  artboard.height = uiScreen.height;
   artboard.fill = new Color("#F2F2F2");
   artboard.dynamicLayout = true;
 
   root.addChild(artboard);
   artboard.moveInParentCoordinates(x, y);
 
-  uiScreen.forEach((element) => {
+  uiScreen.objects.forEach((element) => {
     const { name } = element;
 
     if (name === "other") {

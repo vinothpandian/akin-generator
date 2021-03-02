@@ -135,16 +135,16 @@ function generateArtboard(uiPatternName, uiScreen, i) {
   const [x, y] = getArtboardLocation(i);
 
   const artboard = new scenegraph.Artboard();
-  artboard.name = `${uiPatternName}_wireframe_${i}`;
-  artboard.width = ARTBOARD_WIDTH;
-  artboard.height = ARTBOARD_HEIGHT;
+  artboard.name = `${uiPatternName}_wireframe_${uiScreen.id}`;
+  artboard.width = uiScreen.width;
+  artboard.height = uiScreen.height;
   artboard.fill = new scenegraph.Color("#F2F2F2");
   artboard.dynamicLayout = true;
 
   scenegraph.root.addChild(artboard);
   artboard.moveInParentCoordinates(x, y);
 
-  uiScreen.forEach((element) => {
+  uiScreen.objects.forEach((element) => {
     const { name } = element;
 
     if (name === "other") {
