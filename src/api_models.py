@@ -1,4 +1,5 @@
 from enum import Enum
+from typing import List
 
 from pydantic import BaseModel
 
@@ -13,10 +14,17 @@ class DimensionSchema(BaseModel):
     height: int
 
 
-class PredictionResponse(BaseModel):
+class ObjectsSchema(BaseModel):
     name: str
     position: PositionSchema
     dimension: DimensionSchema
+
+
+class WireframeSchema(BaseModel):
+    id: str
+    width: int
+    height: int
+    objects: List[ObjectsSchema]
 
 
 class UIDesignPattern(Enum):

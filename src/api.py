@@ -5,8 +5,8 @@ from fastapi import FastAPI, Query, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 
-from src.api_models import PredictionResponse, UIDesignPattern
-from src.get_annotations import generate_annotations
+from src.api_models import UIDesignPattern, WireframeSchema
+from src.get_annotations import generate_wireframe_samples
 
 warnings.filterwarnings("ignore", message=r"Passing", category=FutureWarning)
 
@@ -43,7 +43,7 @@ async def redirect_to_home():
 
 @app.post(
     "/generate",
-    response_model=List[List[PredictionResponse]],
+    response_model=List[WireframeSchema],
     status_code=status.HTTP_200_OK,
     response_description=(
         "Responds with a list of UI wireframe annotations"
@@ -62,6 +62,6 @@ async def generate_wireframes(
     ),
 ):
 
-    response = generate_annotations(ui_design_pattern_type, sample_num=8)
+    response = generate_wireframe_samples(ui_design_pattern_type, sample_num=8)
 
     return response

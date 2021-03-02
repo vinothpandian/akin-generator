@@ -8,9 +8,10 @@ from scipy import spatial, stats
 
 from src.api_models import (
     DimensionSchema,
+    ObjectsSchema,
     PositionSchema,
-    PredictionResponse,
     UIDesignPattern,
+    WireframeSchema,
 )
 from src.sagan_models import create_generator
 
@@ -78,12 +79,12 @@ def get_nearest_dominant_color(img):
     return (int(closest_color[0]), int(closest_color[1]), int(closest_color[2])), label
 
 
-def get_annotations(image, category):
+def get_wireframe(i, image, category):
     original = image.copy()
     thresh = threshold(image)
     cnts = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     cnts = cnts[0] if len(cnts) == 2 else cnts[1]
-    elements = []
+    objects = []
     for c in cnts:
         x, y, w, h = cv2.boundingRect(c)
         if w < 25 or h < 25:
@@ -105,10 +106,17 @@ def get_annotations(image, category):
 
         position = PositionSchema(x=x, y=y)
         dimension = DimensionSchema(width=w, height=h)
-        element = PredictionResponse(name=label, position=position, dimension=dimension)
+        element = ObjectsSchema(name=label, position=position, dimension=dimension)
+        # WireframeSchema
+        objects.append(element)
 
-        elements.append(element)
-    return elements
+    height, width, _ = original.shape
+
+    wireframe: WireframeSchema = WireframeSchema(
+        id=str(i), width=width, height=height, objects=objects
+    )
+
+    return wireframe
 
 
 def get_category_value(category: UIDesignPattern):
@@ -124,7 +132,7 @@ def get_category_value(category: UIDesignPattern):
         return 4
 
 
-def generate_annotations(category: UIDesignPattern, sample_num=16, z_dim=128):
+def generate_wireframe_samples(category: UIDesignPattern, sample_num=16, z_dim=128):
     global GEN
 
     z = tf.random.truncated_normal(shape=(sample_num, z_dim), dtype=tf.float32)
@@ -132,5 +140,5 @@ def generate_annotations(category: UIDesignPattern, sample_num=16, z_dim=128):
     c = tf.reshape(c, [sample_num, 1])
     samples = GEN([z, c])[0].numpy()
     images = np.array([resize_screen(x, cv2.INTER_NEAREST) for x in samples])
-    annotations = [get_annotations(image, category) for image in images]
-    return annotations
+    wireframes = [get_wireframe(i, image, category) for i, image in enumerate(images)]
+    return wireframes
