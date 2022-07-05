@@ -14,7 +14,7 @@ python-multipart==0.0.5
 PyYAML==5.4.1
 scipy==1.6.1
 tensorflow==2.4.1
-ujson==3.2.0
+ujson==5.4.0
 uvicorn==0.13.4
 uvloop==0.15.2
 watchgod==0.7
