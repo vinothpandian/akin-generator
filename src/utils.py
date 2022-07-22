@@ -26,7 +26,7 @@ class Utils:
             for name in img_names:
                 if ".directory" not in name:
                     print(name)
-                    json_name = name[:-3] + "json"
+                    json_name = f"{name[:-3]}json"
                     json_names.append(json_name)
             Utils.copy_files(json_names, src, dst)
 

@@ -30,9 +30,9 @@ class _Attention(tf.keras.layers.Layer):
         self.data_format = data_format
         
     def build(self, input_shapes):
-        self.gamma = self.add_weight(self.name + '_gamma',
-                                     shape=(),
-                                     initializer=tf.initializers.Zeros)
+        self.gamma = self.add_weight(
+            f'{self.name}_gamma', shape=(), initializer=tf.initializers.Zeros
+        )
     
     def call(self, inputs):
         if len(inputs) != 4:
@@ -42,20 +42,20 @@ class _Attention(tf.keras.layers.Layer):
         key_tensor =  inputs[1]
         value_tensor = inputs[2]
         origin_input = inputs[3]
-        
+
         input_shape = tf.shape(query_tensor)
-        
+
         if self.data_format == 'channels_first':
             height_axis = 2
             width_axis = 3
         else:
             height_axis = 1
             width_axis = 2
-        
+
         batchsize = input_shape[0]
         height = input_shape[height_axis]
         width = input_shape[width_axis]
-        
+
         if self.data_format == 'channels_first':
             proj_query = tf.transpose(
                 tf.reshape(query_tensor, (batchsize, -1, height*width)),(0, 2, 1))
@@ -71,11 +71,11 @@ class _Attention(tf.keras.layers.Layer):
         energy = tf.matmul(proj_query, proj_key)
         attention = tf.nn.softmax(energy)
         out = tf.matmul(proj_value, tf.transpose(attention, (0, 2, 1)))
-        
+
         if self.data_format == 'channels_first':
             out = tf.reshape(out, (batchsize, -1, height, width))
         else:
             out = tf.reshape(
                 tf.transpose(out, (0, 2, 1)), (batchsize, height, width, -1))
-        
+
         return tf.add(tf.multiply(out, self.gamma), origin_input), attention

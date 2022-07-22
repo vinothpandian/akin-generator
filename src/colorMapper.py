@@ -51,18 +51,15 @@ class ColorMapper:
         fontScale = 0.4
         fontColor = (0, 0, 0)
         lineType = 1
-        i = 0
-        for k, v in label_color_map.items():
+        for i, (k, v) in enumerate(label_color_map.items()):
             img[(i * side) : (i * side) + side, 0:side, :] = [v[0], v[1], v[2]]
-            bottomLeftCornerOfText = (int(side * 1.5), (i * side) + int(side / 2))
+            bottomLeftCornerOfText = int(side * 1.5), i * side + side // 2
             img = cv2.putText(img, str(k), bottomLeftCornerOfText, font, fontScale, fontColor, lineType)
-            i += 1
         cv2.imwrite(save_image_file, img)
 
     @staticmethod
     def get_sorted_colors(colors, max_i):
-        sorted_color = []
-        sorted_color.append(colors.pop(max_i))
+        sorted_color = [colors.pop(max_i)]
         metric = "euclidean"
         while len(colors) > 0:
             n = np.array(sorted_color)
@@ -78,16 +75,13 @@ class ColorMapper:
         print(len(sorted_colors))
         print(len(sorted_labels))
         assert len(sorted_colors) == len(sorted_labels)
-        label_map = {}
-        for i, label in enumerate(sorted_labels):
-            label_map[label] = sorted_colors[i]
-        return label_map
+        return {label: sorted_colors[i] for i, label in enumerate(sorted_labels)}
 
     @staticmethod
     def save_label_map(label_map, file):
         with open(file, "w+") as f:
             for k, v in label_map.items():
-                s = k + "," + str(v[0]) + "," + str(v[1]) + "," + str(v[2]) + "\n"
+                s = f"{k},{str(v[0])},{str(v[1])},{str(v[2])}" + "\n"
                 f.write(s)
 
     @staticmethod
@@ -105,7 +99,7 @@ class ColorMapper:
                         color = [int(s[1]), int(s[2]), int(s[3])]
                     label_color_map[label] = color
         else:
-            print(str(file) + " file does not exists")
+            print(f"{str(file)} file does not exists")
         return label_color_map
 
     @staticmethod

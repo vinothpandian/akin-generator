@@ -50,8 +50,7 @@ def threshold(img):
     m2 = sub_threshold(img[:, :, 1], True, True)
     m3 = sub_threshold(img[:, :, 2], True, True)
 
-    res = cv2.add(m1, cv2.add(m2, m3))
-    return res
+    return cv2.add(m1, cv2.add(m2, m3))
 
 
 def erode(thresh):
@@ -63,8 +62,7 @@ def erode(thresh):
 def unsharp(imgray):
     imgray = imgray.copy()
     gaussian = cv2.GaussianBlur(imgray, (7, 7), 10.0)
-    unsharp_image = cv2.addWeighted(imgray, 2.5, gaussian, -1.5, 0, imgray)
-    return unsharp_image
+    return cv2.addWeighted(imgray, 2.5, gaussian, -1.5, 0, imgray)
 
 
 def get_nearest_dominant_color(img):
@@ -112,11 +110,9 @@ def get_wireframe(i, image, category):
 
     height, width, _ = original.shape
 
-    wireframe: WireframeSchema = WireframeSchema(
+    return WireframeSchema(
         id=str(i), width=width, height=height, objects=objects
     )
-
-    return wireframe
 
 
 def get_category_value(category: UIDesignPattern):
@@ -140,5 +136,4 @@ def generate_wireframe_samples(category: UIDesignPattern, sample_num=16, z_dim=1
     c = tf.reshape(c, [sample_num, 1])
     samples = GEN([z, c])[0].numpy()
     images = np.array([resize_screen(x, cv2.INTER_NEAREST) for x in samples])
-    wireframes = [get_wireframe(i, image, category) for i, image in enumerate(images)]
-    return wireframes
+    return [get_wireframe(i, image, category) for i, image in enumerate(images)]
