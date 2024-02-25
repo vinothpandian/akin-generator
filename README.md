@@ -27,7 +27,7 @@
 
 Akin uses a manually annotated subset of RICO dataset
 
-- [Dataset with annotations and semantic images](https://blackbox-toolkit.vinoth.info/datasets/Akin_SAGAN_500.tar.gz)
+- [Dataset with annotations and semantic images](https://blackbox-toolkit.s3.us-east-2.amazonaws.com/datasets/Akin_SAGAN_500.tar.gz)
 
 ---
 
@@ -39,11 +39,11 @@ To install and retrain Akin, follow the steps below
 
 - Download and extract the dataset to the `data/train` directory
 
-  - [Dataset with annotations and semantic images](https://blackbox-toolkit.vinoth.info/datasets/Akin_SAGAN_500.tar.gz)
+  - [Dataset with annotations and semantic images](https://blackbox-toolkit.s3.us-east-2.amazonaws.com/datasets/Akin_SAGAN_500.tar.gz)
 
 - Download the following files to the `models/` directory
 
-  - [Akin trained checkpoint](https://blackbox-toolkit.vinoth.info/models/akin_checkpoints.tar.gz)
+  - [Akin trained checkpoint](https://blackbox-toolkit.s3.us-east-2.amazonaws.com/models/akin_checkpoints.tar.gz)
 
 - Install dependencies
 
