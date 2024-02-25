@@ -28,10 +28,8 @@ def threshold(img):
     m2 = sub_threshold(img[:, :, 1], 2, True, True)  # --- threshold on green channel
     m3 = sub_threshold(img[:, :, 2], 3, True, True)  # --- threshold on red channel
 
-    # --- adding up all the results above ---
-    res = cv2.add(m1, cv2.add(m2, m3))
     # cv2.imwrite("image_thresh.png", res)
-    return res
+    return cv2.add(m1, cv2.add(m2, m3))
 
 
 def erode(thresh, st):
@@ -45,10 +43,9 @@ def unsharp(imgray, st):
     # Unsharp mask here
     imgray = imgray.copy()
     gaussian = cv2.GaussianBlur(imgray, (7, 7), 10.0)
-    unsharp_image = cv2.addWeighted(imgray, 2.5, gaussian, -1.5, 0, imgray)
     # cv2.imwrite("unsharp_"+str(st)+".jpg", unsharp_image)
 
-    return unsharp_image
+    return cv2.addWeighted(imgray, 2.5, gaussian, -1.5, 0, imgray)
 
 
 def get_bounding_boxes(dir, image_name, dst_path, dir_name):
@@ -69,9 +66,11 @@ def get_bounding_boxes(dir, image_name, dst_path, dir_name):
             continue
         cv2.rectangle(new_semantic, (x, y), (x + w, y + h), dominant_color, 3)
         elements.append({"points": [[x, y], [x + w, y + h]], "label": label})
-    cv2.imwrite(os.path.join(dst_path, image_name[:-4] + "0.png"), image)
-    cv2.imwrite(os.path.join(dst_path, image_name[:-4] + "1.png"), new_semantic)
-    create_json_file(os.path.join(dst_path, image_name[:-4] + ".json"), elements, dir_name)
+    cv2.imwrite(os.path.join(dst_path, f"{image_name[:-4]}0.png"), image)
+    cv2.imwrite(os.path.join(dst_path, f"{image_name[:-4]}1.png"), new_semantic)
+    create_json_file(
+        os.path.join(dst_path, f"{image_name[:-4]}.json"), elements, dir_name
+    )
 
 
 def get_nearest_dominant_color(img):
@@ -91,7 +90,7 @@ def create_json_file(path, elements, flag):
             "imageWidth": 360,
             "flags": {flag: True}
             }
-    if data is not None and len(data) > 0:
+    if data is not None and data:
         with open(path, "w+") as ff:
             json.dump(data, ff, indent=True)
 

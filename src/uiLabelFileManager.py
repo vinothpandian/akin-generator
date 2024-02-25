@@ -38,32 +38,28 @@ class UILabelFileManager:
     def get_sorted_labels_for_hierarchy(label_count_file, heirarchy_file, level=0, with_count=False):
         if level == 0:
             return UILabelFileManager.get_label_counts(label_count_file, sorted_flag=True)
-        else:
-            label_count = UILabelFileManager.get_label_counts(label_count_file)
-            hierarchy_map = UILabelFileManager.get_ui_hierarchy_map(heirarchy_file)
-            hierarchy_count = {}
-            for k, v in hierarchy_map.items():
-                if len(v) < level - 1:
-                    label = v[-1]
-                else:
-                    label = v[level - 1]
-                if k not in label_count.keys():
-                    count = 0
-                    print(k + " not in label count")
-                else:
-                    count = label_count[k]
-                if label in hierarchy_count.keys():
-                    hierarchy_count[label] += count
-                else:
-                    hierarchy_count[label] = count
-            heirarchy_count_list = list(hierarchy_count.items())
-            heirarchy_count_list.sort(key=lambda x: x[1], reverse=True)
-            print(heirarchy_count_list)
-            if with_count:
-                return heirarchy_count_list
+        label_count = UILabelFileManager.get_label_counts(label_count_file)
+        hierarchy_map = UILabelFileManager.get_ui_hierarchy_map(heirarchy_file)
+        hierarchy_count = {}
+        for k, v in hierarchy_map.items():
+            label = v[-1] if len(v) < level - 1 else v[level - 1]
+            if k not in label_count.keys():
+                count = 0
+                print(f"{k} not in label count")
             else:
-                sorted_labels = [v[0] for v in heirarchy_count_list]
-                return sorted_labels
+                count = label_count[k]
+            if label in hierarchy_count:
+                hierarchy_count[label] += count
+            else:
+                hierarchy_count[label] = count
+        heirarchy_count_list = list(hierarchy_count.items())
+        heirarchy_count_list.sort(key=lambda x: x[1], reverse=True)
+        print(heirarchy_count_list)
+        return (
+            heirarchy_count_list
+            if with_count
+            else [v[0] for v in heirarchy_count_list]
+        )
 
     @staticmethod
     def get_sorted_labels_based_on_pairings(level):
@@ -77,15 +73,11 @@ class UILabelFileManager:
 
     @staticmethod
     def get_hierarchy_label_map(file, level=1):
-        if level >= 1:
-            hierarchy_map = UILabelFileManager.get_ui_hierarchy_map(file)
-            hierarchy_label_map = {}
-            for k, v in hierarchy_map.items():
-                if len(v) < level - 1:
-                    label = v[-1]
-                else:
-                    label = v[level - 1]
-                hierarchy_label_map[k] = label
-            return hierarchy_label_map
-        else:
+        if level < 1:
             return {}
+        hierarchy_map = UILabelFileManager.get_ui_hierarchy_map(file)
+        hierarchy_label_map = {}
+        for k, v in hierarchy_map.items():
+            label = v[-1] if len(v) < level - 1 else v[level - 1]
+            hierarchy_label_map[k] = label
+        return hierarchy_label_map

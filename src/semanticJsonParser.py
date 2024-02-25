@@ -128,12 +128,8 @@ class SemanticJsonParser:
             dy = min(large[3], small[3]) - max(large[1], small[1])
             if dx < 0 and dy < 0:
                 return False
-            else:
-                overlap_area = dx * dy
-                if overlap_area / small_area > 0.96:
-                    return True
-                else:
-                    return False
+            overlap_area = dx * dy
+            return overlap_area / small_area > 0.96
         except Exception as e:
             print(e)
             return True
@@ -182,7 +178,7 @@ class SemanticJsonParser:
                 # img = SemanticJsonParser.mark_image(value["img"], meta, None, label_color_map, border=True, skip_box=True)
                 img = SemanticJsonParser.mark_image(img_z, meta, None, label_color_map, border=True, skip_box=True)
                 img = SemanticJsonParser.remove_top_bottom(img)
-                SemanticJsonParser.save_img(img, path=os.path.join(dst, key + ".jpg"))
+                SemanticJsonParser.save_img(img, path=os.path.join(dst, f"{key}.jpg"))
             except Exception as e:
                 print(key, e)
 
@@ -196,10 +192,7 @@ class SemanticJsonParser:
         y = point_b[1] - point_a[1]
         area = x * y
         rel = area / 230400
-        if rel < 0.4:
-            return True
-        else:
-            return False
+        return rel < 0.4
 
     @staticmethod
     def save_img(img, path):
@@ -217,11 +210,10 @@ class SemanticJsonParser:
                 label = "other"
         else:
             label = element
-        if label in label_color_map.keys():
-            color = label_color_map[label]
-            return color, label
-        else:
+        if label not in label_color_map.keys():
             return None, label
+        color = label_color_map[label]
+        return color, label
 
     @staticmethod
     def convert_bb_to_image(
@@ -241,9 +233,11 @@ class SemanticJsonParser:
         for i in range(len(predictions_bb)):
             prediction_bb = predictions_bb[i]
             prediction_label = predictions_label[i]
-            meta = []
-            for j in range(len(prediction_bb)):
-                meta.append([prediction_label[j], prediction_bb[j]])
+            meta = [
+                [prediction_label[j], prediction_bb[j]]
+                for j in range(len(prediction_bb))
+            ]
+
             img = np.zeros((img_h, img_w, 3))
             img = SemanticJsonParser.mark_image(img, meta, label_hierarchy_map, label_color_map, gan_output=True)
             if combined:
@@ -251,11 +245,16 @@ class SemanticJsonParser:
             else:
                 img = SemanticJsonParser.remove_top_bottom(img)
                 SemanticJsonParser.save_img(
-                    img, path=os.path.join(dst, "predicted_" + str(ctr) + "_" + str(i) + ".jpg")
+                    img,
+                    path=os.path.join(dst, f"predicted_{str(ctr)}_{str(i)}.jpg"),
                 )
+
         if combined:
             all_images = all_images.reshape((-1, img_w, 3))
-            SemanticJsonParser.save_img(all_images, path=os.path.join(dst, "predicted_epoch" + str(ctr) + ".jpg"))
+            SemanticJsonParser.save_img(
+                all_images,
+                path=os.path.join(dst, f"predicted_epoch{str(ctr)}.jpg"),
+            )
 
 
 if __name__ == "__main__":

@@ -62,6 +62,4 @@ async def generate_wireframes(
     ),
 ):
 
-    response = generate_wireframe_samples(ui_design_pattern_type, sample_num=8)
-
-    return response
+    return generate_wireframe_samples(ui_design_pattern_type, sample_num=8)

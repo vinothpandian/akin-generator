@@ -48,27 +48,26 @@ class SpectralConv2D(tf.keras.layers.Conv2D):
 
     def build(self, input_shape):
         super(SpectralConv2D, self).build(input_shape)
-        
+
         if not self._made_params():
 
-            if self.data_format == 'channels_first':
-                channel_axis = 1
-            else:
-                channel_axis = -1
-
+            channel_axis = 1 if self.data_format == 'channels_first' else -1
             input_dim = int(input_shape[channel_axis])
             kernel_shape = self._get_kernel_shape(input_dim)
 
-            self.u = self.add_weight(self.name + '_v',
-                shape=[self.filters, 1], 
+            self.u = self.add_weight(
+                f'{self.name}_v',
+                shape=[self.filters, 1],
                 initializer=L2normalizedRandomNormal,
-                trainable=False
+                trainable=False,
             )
 
-            self.v = self.add_weight(self.name + '_u',
+
+            self.v = self.add_weight(
+                f'{self.name}_u',
                 shape=[self.kernel_size[0] * self.kernel_size[1] * input_dim, 1],
                 initializer=L2normalizedRandomNormal,
-                trainable=False
+                trainable=False,
             )
 
     def compute_spectral_norm(self):
@@ -109,15 +108,11 @@ class SpectralConv2DTranspose(SpectralConv2D, tf.keras.layers.Conv2DTranspose):
     
     def call(self, inputs):
         new_v, new_u, new_kernel = self.compute_spectral_norm()
-        
+
         inputs_shape = tf.shape(inputs)
         batch_size = inputs_shape[0]
-    
-        if self.data_format == 'channels_first':
-            h_axis, w_axis = 2, 3
-        else:
-            h_axis, w_axis = 1, 2
 
+        h_axis, w_axis = (2, 3) if self.data_format == 'channels_first' else (1, 2)
         height, width = inputs_shape[h_axis], inputs_shape[w_axis]
         kernel_h, kernel_w = self.kernel_size
         stride_h, stride_w = self.strides

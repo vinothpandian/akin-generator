@@ -93,7 +93,7 @@ class Trainer(object):
                             else:
                                 new_data[c[0][:-4]] = int(c[1])
             else:
-                print("file " + str(path) + " does not exist")
+                print(f"file {str(path)} does not exist")
         except Exception as e:
             print(e)
         return new_data
@@ -107,15 +107,14 @@ class Trainer(object):
             for f in filenames:
                 image_path = os.path.join(dirname, f)
                 image_label = label_map[f]
-                if image_label in cat_count.keys() and cat_count[image_label] >= 100:
-                    continue
-                else:
+                if image_label not in cat_count.keys():
                     images.append(image_path)
                     labels.append(image_label)
-                    if image_label not in cat_count.keys():
-                        cat_count[image_label] = 1
-                    else:
-                        cat_count[image_label] += 1
+                    cat_count[image_label] = 1
+                elif cat_count[image_label] < 100:
+                    images.append(image_path)
+                    labels.append(image_label)
+                    cat_count[image_label] += 1
 
         print(len(images))
         self.nbatch = int(np.ceil(len(images) / self.batch_size))
@@ -193,7 +192,7 @@ class Trainer(object):
 
     def train(self):
         print("Start Training")
-        print("epoch: {}".format(self.epoch))
+        print(f"epoch: {self.epoch}")
 
         for epoch in range(self.epoch_start, self.epoch_start + self.epoch):
             epoch_start_time = time.time()
