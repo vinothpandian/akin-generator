@@ -86,7 +86,7 @@ class SpectralConv2D(tf.keras.layers.Conv2D):
 
     def call(self, inputs):
         new_v, new_u, new_kernel = self.compute_spectral_norm()
-        outputs = self._convolution_op(inputs, new_kernel)
+        outputs = self.convolution_op(inputs, new_kernel)
 
         if self.use_bias:
             if self.data_format == 'channels_first':
